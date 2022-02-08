@@ -7,7 +7,7 @@ var logger = require('morgan');
 // for enviroment variable
 require('dotenv').config();
 // datbase connection
-require("./database/mongoose");
+require('./database/mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
