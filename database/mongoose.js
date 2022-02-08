@@ -4,7 +4,7 @@ let dbConnection = async () => {
     mongoose.Promise = global.Promise;
     mongoose.set('returnOriginal', false);
     console.log(process.env.MONGO_CONNECTION);
-    await mongoose.connect(process.env.MONGO_CONNECTION)
+    await mongoose.connect(process.env.MONGO_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => {
             console.log("Database connected successfully");
         })
