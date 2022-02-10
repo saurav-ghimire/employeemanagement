@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let userSchema = new Schema({
@@ -12,6 +14,17 @@ let userSchema = new Schema({
    'created_at': { type: Date, default: Date.now },
    'updated_at': { type: Date, default: Date.now }
 });
+
+userSchema.pre('save', function (next) {
+   let user = this;
+   if (!user.isModified('password')) { return next(); }
+
+   user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+   next();
+});
+userSchema.methods.verifyPassword = function (password) {
+   return bcrypt.compareSync(password, this.password);
+};
 
 
 module.exports = mongoose.model('User', userSchema);
