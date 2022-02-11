@@ -7,9 +7,7 @@ let { isLoggedIn } = require("../middleware/authenticateMiddleware");
 const { get } = require('mongoose');
 
 /* GET home page. */
-router.get('/', [isLoggedIn], function (req, res, next) {
-  res.render('index', { title: 'Welcome to home page', name: req.user.name });
-});
+router.get('/', [isLoggedIn], userController.dashboard);
 
 // register page
 router.get('/register', userController.register);
@@ -52,6 +50,10 @@ router.put('/profileupdate/:id', [isLoggedIn], userController.profileUpdate);
 router.get('/forgetpassword', [createUserValidation], userController.forgetPage);
 
 router.post('/forget', [createUserValidation], userController.forgetSendEmail);
+
+router.get('/reset', async function (req, res, send) {
+  res.sendStatus(403)
+});
 
 router.get('/reset/:token', [createUserValidation], userController.resetPage);
 

@@ -4,7 +4,12 @@ let randtoken = require('rand-token');
 
 let userService = require("../services/userService");
 let { sendMail } = require("../services/emailService");
-const { proppatch } = require('../routes');
+
+// for dashboard after login
+let dashboard = async function (req, res, next) {
+    let userInfo = await userService.findOne({ _id: req.user.id });
+    res.render('index', { title: 'Welcome to home page', userInfo: req.user });
+}
 
 // for register page
 let register = async function (req, res, next) {
@@ -18,7 +23,7 @@ let signinPage = async function (req, res, next) {
 
 let signin = async function (req, res, next) {
 
-    return res.redirect("/dashboard");
+    return res.redirect("/");
 }
 
 let logout = async function (req, res, next) {
@@ -188,17 +193,19 @@ let changePassword = async function (req, res, next) {
     let userData = await userService.findOne({ token: userToken });
     let password = req.body.password;
     let passwordre = req.body.passwordre;
-    if (password != passwordre) {
+    if (password !== passwordre) {
         req.flash('error_msg', 'Password Dosenot Match');
         res.render('reset', { userdetails: userData });
+        next();
     } else {
+        let bcrypt = require('bcryptjs');
+        const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync());
         let updateData = {
             status: "active",
             token: "",
             tokenExpiry: null,
-            password: password
+            password: hashedPassword
         }
-
         await userService.findOneAndUpdateService({ token: userToken }, updateData);
         req.flash("success_msg", "Your passoword is changed.");
         return res.redirect("/forgetpassword");
@@ -217,5 +224,6 @@ module.exports = {
     forgetPage,
     forgetSendEmail,
     resetPage,
-    changePassword
+    changePassword,
+    dashboard
 }
