@@ -49,12 +49,12 @@ router.get('/profile-edit', [isLoggedIn], userController.profileedit);
 router.put('/profileupdate/:id', [isLoggedIn], userController.profileUpdate);
 
 // forget page
-router.get('/forgetpassword', userController.forgetPage);
+router.get('/forgetpassword', [createUserValidation], userController.forgetPage);
 
-router.post('/forget', userController.forgetSendEmail);
+router.post('/forget', [createUserValidation], userController.forgetSendEmail);
 
-router.get('/reset/:token', async function (req, res, next) {
-  console.log(req.params.token);
-})
+router.get('/reset/:token', [createUserValidation], userController.resetPage);
+
+router.put('/reset/:token', [createUserValidation], userController.changePassword);
 
 module.exports = router;

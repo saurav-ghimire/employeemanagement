@@ -4,6 +4,7 @@ let randtoken = require('rand-token');
 
 let userService = require("../services/userService");
 let { sendMail } = require("../services/emailService");
+const { proppatch } = require('../routes');
 
 // for register page
 let register = async function (req, res, next) {
@@ -172,6 +173,37 @@ let forgetSendEmail = async function (req, res, next) {
     }
 
 }
+let resetPage = async function (req, res, next) {
+    userToken = req.params.token
+    let userData = await userService.findOne({ token: userToken });
+    if (userData) {
+        res.render('reset', { userdetails: userData });
+        req.flash('success_msg', 'User Valid');
+    } else {
+        res.render('forgetpassword');
+    }
+}
+let changePassword = async function (req, res, next) {
+    userToken = req.params.token
+    let userData = await userService.findOne({ token: userToken });
+    let password = req.body.password;
+    let passwordre = req.body.passwordre;
+    if (password != passwordre) {
+        req.flash('error_msg', 'Password Dosenot Match');
+        res.render('reset', { userdetails: userData });
+    } else {
+        let updateData = {
+            status: "active",
+            token: "",
+            tokenExpiry: null,
+            password: password
+        }
+
+        await userService.findOneAndUpdateService({ token: userToken }, updateData);
+        req.flash("success_msg", "Your passoword is changed.");
+        return res.redirect("/forgetpassword");
+    }
+}
 module.exports = {
     register,
     signinPage,
@@ -183,5 +215,7 @@ module.exports = {
     profileedit,
     profileUpdate,
     forgetPage,
-    forgetSendEmail
+    forgetSendEmail,
+    resetPage,
+    changePassword
 }
