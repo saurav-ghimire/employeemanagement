@@ -6,6 +6,7 @@ let companyController = require("../controllers/companyDeparment");
 let { createUserValidation } = require("../validators/userValidator");
 let { createDepartmentValidation } = require("../validators/departmentValidators");
 let { isLoggedIn } = require("../middleware/authenticateMiddleware");
+const department = require('../models/department');
 
 /* GET home page. */
 router.get('/', [isLoggedIn], userController.dashboard);
@@ -62,8 +63,22 @@ router.put('/reset/:token', [createUserValidation], userController.changePasswor
 
 // company details
 // -------------------------
-// department page
-router.get('/departments', companyController.departmentPage);
-router.post('/departments', [createDepartmentValidation], companyController.departmentSave);
 
+// department page
+router.get('/departments', [isLoggedIn], companyController.departmentPage);
+
+// department save
+router.post('/departments', [isLoggedIn, createDepartmentValidation], companyController.departmentSave);
+
+// department list page
+router.get('/departments-list', [isLoggedIn], companyController.departmentList);
+
+// department edit page
+router.get('/departments-edit/:id', [isLoggedIn], companyController.departmentEdit);
+
+// department update
+router.put('/departments-edit/:id', [isLoggedIn, createDepartmentValidation], companyController.departmentUpdate);
+
+// department delete
+router.delete('/departments-delete/:id', companyController.departmentDelete);
 module.exports = router;
