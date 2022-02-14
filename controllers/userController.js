@@ -8,7 +8,7 @@ let { sendMail } = require("../services/emailService");
 // for dashboard after login
 let dashboard = async function (req, res, next) {
     let userInfo = await userService.findOne({ _id: req.user.id });
-    res.render('index', { title: 'Welcome to home page', userInfo: req.user });
+    res.render('index', { title: 'Welcome to home page' });
 }
 
 // for register page
@@ -99,7 +99,7 @@ let profilepage = async function (req, res, next) {
     res.render('./profile', { userdetails: req.user });
 }
 let profileedit = async function (req, res, next) {
-    res.render('./profile-edit', { userInfo: req.user });
+    res.render('./profile-edit');
 }
 let profileUpdate = async function (req, res, next) {
     let id = req.params.id;

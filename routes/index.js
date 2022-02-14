@@ -2,9 +2,10 @@ var express = require('express');
 var router = express.Router();
 let passport = require("passport");
 let userController = require("../controllers/userController");
+let companyController = require("../controllers/companyDeparment");
 let { createUserValidation } = require("../validators/userValidator");
+let { createDepartmentValidation } = require("../validators/departmentValidators");
 let { isLoggedIn } = require("../middleware/authenticateMiddleware");
-const { get } = require('mongoose');
 
 /* GET home page. */
 router.get('/', [isLoggedIn], userController.dashboard);
@@ -51,12 +52,18 @@ router.get('/forgetpassword', [createUserValidation], userController.forgetPage)
 
 router.post('/forget', [createUserValidation], userController.forgetSendEmail);
 
-router.get('/reset', async function (req, res, send) {
+router.get('/reset', async function (req, res, next) {
   res.sendStatus(403)
 });
 
 router.get('/reset/:token', [createUserValidation], userController.resetPage);
 
 router.put('/reset/:token', [createUserValidation], userController.changePassword);
+
+// company details
+// -------------------------
+// department page
+router.get('/departments', companyController.departmentPage);
+router.post('/departments', [createDepartmentValidation], companyController.departmentSave);
 
 module.exports = router;

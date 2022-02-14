@@ -63,6 +63,12 @@ app.use(async (req, res, next) => {
   res.locals['errors'] = req.flash('errors');
   res.locals['success_msg'] = req.flash('success_msg');
 
+  if (req.user) {
+
+    res.locals['loggedInUser'] = req.user;
+
+  }
+
   next();
 
 });
