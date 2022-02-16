@@ -13,30 +13,30 @@
                                 <div class="card-body">
                                     <% include ./partials/message %>
                                         <h4 class="card-title">Edit User Details</h4>
-                                        <form action="/profileupdate/<%= userInfo._id; %>?_method=PUT" method="POST"
+                                        <form action="/profileupdate/<%= loggedInUser._id; %>?_method=PUT" method="POST"
                                             enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="">Name</label>
                                                 <input type="text" name="name" class="form-control form-control-lg"
-                                                    value="<%= userInfo.name; %>" />
+                                                    value="<%= loggedInUser.name; %>" />
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Username</label>
                                                 <input type="text" name="username" class="form-control form-control-lg"
-                                                    value="<%= userInfo.username; %>" />
+                                                    value="<%= loggedInUser.username; %>" />
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Email</label>
                                                 <input type="text" name="email" class="form-control form-control-lg"
-                                                    value="<%= userInfo.email; %>" />
+                                                    value="<%= loggedInUser.email; %>" />
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Profile Image</label>
                                                 <input type="file" name="image" class="form-control form-control-lg" />
                                                 <hr>
-                                                <% if(userInfo.image) { %>
+                                                <% if(loggedInUser.image) { %>
                                                     <label style="cursor: pointer;" for="image"><img
-                                                            src="/uploads/<%= userInfo.image %>"
+                                                            src="/uploads/<%= loggedInUser.image %>"
                                                             alt="Profile picture"></label>
                                                     <% } %>
                                             </div>

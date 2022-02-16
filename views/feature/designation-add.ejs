@@ -12,22 +12,22 @@
                             <div class="card">
                                 <div class="card-body">
                                     <% include ../partials/message %>
-                                        <h4 class="card-title">Our Departments</h4>
-                                        <form action="/departments-edit/<%= data._id %>?_method=PUT" method="POST">
+                                        <h4 class="card-title">Designation</h4>
+                                        <form action="/designation/add" method="POST">
                                             <div class="form-group">
-                                                <label>Edit <%= data.title %></label>
+                                                <label>Designation Name</label>
                                                 <input type="text" class="form-control form-control-lg"
-                                                    placeholder="Department Name" name="title"
-                                                    value="<%= data.title %>">
+                                                    placeholder="Designation Name" name="title"
+                                                    value="<%= inputData && inputData.title ? inputData.title : '' %>">
                                             </div>
                                             <div class="form-group">
                                                 <button
                                                     class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
-                                                    type="submit">Update</button>
+                                                    type="submit">Create</button>
                                             </div>
                                         </form>
                                         <hr>
-                                        <a href="/departments-list">
+                                        <a href="/designation/">
                                             <button class="btn btn-block btn-danger btn-lg font-weight-medium "
                                                 type="submit">Back</button>
                                         </a>

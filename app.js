@@ -20,6 +20,8 @@ require('./database/mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var employeesRouter = require('./routes/employees');
+var designationRouter = require('./routes/designation');
 
 var app = express();
 app.use(session({
@@ -72,7 +74,10 @@ app.use(async (req, res, next) => {
   next();
 
 });
+
 app.use('/', indexRouter);
+app.use('/employees', employeesRouter);
+app.use('/designation', designationRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
