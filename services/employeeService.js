@@ -1,8 +1,10 @@
 let employeeModel = require("../models/employee");
 
 let findAll = async function (query) {
-    let store = await employeeModel.find(query);
+    let store = await employeeModel.find(query).populate('designation').populate('department');
+    console.log(store);
     return store;
+
 };
 let employeeSave = async function (query) {
 

@@ -73,14 +73,14 @@
                                                                 <%= store.contactphone %>
                                                             </td>
                                                             <td>
-                                                                <%= store.designation %>
+                                                                <%= store.designation.title %>
                                                             </td>
                                                             <td>
-                                                                <%= store.department %>
+                                                                <%= store.department.title %>
                                                             </td>
                                                             <td
                                                                 style="display: flex; justify-content: flex-start; align-items: center;">
-                                                                <a href="/designation/edit/<%= store._id; %>"
+                                                                <a href="/employees/edit/<%= store._id; %>"
                                                                     style="text-decoration: none;">
                                                                     <button
                                                                         class="btn btn-primary btn-sm font-weight-medium">
@@ -88,7 +88,7 @@
                                                                 </a>
                                                                 &nbsp;
                                                                 <form
-                                                                    action="/designation/<%= store._id; %>?_method=delete"
+                                                                    action="/employees/delete/<%= store._id; %>?_method=delete"
                                                                     method="post">
                                                                     <button
                                                                         class="btn btn-danger btn-sm font-weight-medium">

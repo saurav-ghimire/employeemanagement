@@ -1,0 +1,124 @@
+<% include ../partials/header %>
+    <% include ../partials/head %>
+
+
+        <!-- partial:partials/_sidebar.html -->
+        <% include ../partials/sidebar %>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <% include ../partials/message %>
+                                        <h4 class="card-title">Add Employee</h4>
+                                        <form action="/employees/update/<%= employeyList._id; %>?_method=PUT"
+                                            method="POST">
+                                            <div class="form-group">
+                                                <label>Employee Name</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="First Name" name="firstname"
+                                                    value="<%= employeyList.firstname %>">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="Last Name" name="lastname"
+                                                    value="<%= employeyList.lastname %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Gender</label> <br>
+                                                <% if(employeyList.gender=='Male' ){ %>
+                                                    <span><input type="radio" name="gender" value="Male" id="" checked>
+                                                        Male</span>
+                                                    <span><input type="radio" name="gender" value="Female" id="">
+                                                        Female</span>
+                                                    <% }else{ %>
+                                                        <span><input type="radio" name="gender" value="Male" id="">
+                                                            Male</span>
+                                                        <span><input type="radio" name="gender" value="Female" checked
+                                                                id="">
+                                                            Female</span>
+
+                                                        <% } %>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Age</label>
+                                                <input type="number" class="form-control form-control-lg"
+                                                    placeholder="Age" name="age" value="<%= employeyList.age %>">
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label for="">Department</label>
+                                                <select name="department" id="" class="form-control form-control-lg">
+                                                    <% for(let i=0; departmentList.length> i; i++){
+                                                        let store = departmentList[i];
+                                                        store.title;
+                                                        %>
+                                                        <option value="<%= store._id %>">
+                                                            <%= store.title %>
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Designation</label>
+                                                <select name="designation" id="" class="form-control form-control-lg">
+                                                    <% for(let i=0; designation.length> i; i++){
+                                                        let store = designation[i];
+                                                        store.title;
+                                                        %>
+                                                        <option value="<%= store._id %>">
+                                                            <%= store.title %>
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Contact Address</label>
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="Contact Address" name="contactaddress"
+                                                    value="<%= employeyList.contactaddress %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Contact Email</label>
+                                                <input type="email" class="form-control form-control-lg"
+                                                    placeholder="Email" name="contactemail"
+                                                    value="<%= employeyList.contactemail %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Contact Phone</label>
+                                                <input type="tel" class="form-control form-control-lg"
+                                                    placeholder="Phone" name="contactphone"
+                                                    value="<%= employeyList.contactphone %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Starting Date</label>
+                                                <input type="date" class="form-control form-control-lg"
+                                                    name="started_at" value="<%= employeyList.started_at %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Resigned Date</label>
+                                                <input type="date" class="form-control form-control-lg"
+                                                    name="resigned_at" value="<%= employeyList.resigned_at %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <button
+                                                    class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
+                                                    type="submit">Create</button>
+                                            </div>
+
+                                        </form>
+                                        <hr>
+                                        <a href="/employees-list">
+                                            <button class="btn btn-block btn-danger btn-lg font-weight-medium "
+                                                type="submit">Back</button>
+                                        </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% include ../partials/footer %>
