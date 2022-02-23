@@ -10,6 +10,7 @@ const department = require('../models/department');
 
 /* GET home page. */
 router.get('/', [isLoggedIn], userController.dashboard);
+router.get('/dashboard', [isLoggedIn], userController.dashboard);
 
 // register page
 router.get('/register', userController.register);

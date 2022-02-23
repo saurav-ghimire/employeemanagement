@@ -5,12 +5,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyparser = require('body-parser');
 const fileUpload = require('express-fileupload');
-
+let cors = require('cors')
 let methodOverride = require("method-override");
 const flash = require('connect-flash');
 const session = require('express-session');
 const mongoStore = require('connect-mongo');
 const passport = require('passport');
+let rolesRouter = require('./routes/roles');
+
+const { getPermissions } = require('./helper/permissionHelper');
+let userModel = require("./models/user");
+
 
 // for enviroment variable
 require('dotenv').config();
@@ -22,6 +27,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var employeesRouter = require('./routes/employees');
 var designationRouter = require('./routes/designation');
+var apiRouter = require('./routes/api/api');
 
 var app = express();
 app.use(session({
@@ -66,19 +72,38 @@ app.use(async (req, res, next) => {
   res.locals['success_msg'] = req.flash('success_msg');
 
   if (req.user) {
-
+    let userWithRole = await userModel.findOne({ _id: req.user._id }).populate('role_id');
     res.locals['loggedInUser'] = req.user;
 
+    req.user.role_id = userWithRole.role_id;
+    res.locals.modulePermissions = getPermissions(userWithRole);
+
+    res.locals.checkPermission = (key, user) => {
+      if (user.role_id.name === 'Super Admin') {
+        return true;
+      } else {
+        let permissions = user.role_id.permissions;
+        if (permissions.indexOf(key) !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    };
   }
 
   next();
 
 });
 
+require("./database/roleAndUserSeeder");
+require("./database/permissionSeeder");
+
 app.use('/', indexRouter);
 app.use('/employees', employeesRouter);
 app.use('/designation', designationRouter);
 app.use('/users', usersRouter);
+app.use('/api', cors(), apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

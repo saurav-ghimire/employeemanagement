@@ -11,6 +11,7 @@ let userSchema = new Schema({
    'token': { type: String },
    'image': { type: String },
    'tokenExpiry': { type: Date },
+   'role_id': { type: Schema.ObjectId, ref: 'Role', required: true },
    'created_at': { type: Date, default: Date.now },
    'updated_at': { type: Date, default: Date.now }
 });

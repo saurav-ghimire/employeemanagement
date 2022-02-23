@@ -23,7 +23,7 @@ let signinPage = async function (req, res, next) {
 
 let signin = async function (req, res, next) {
 
-    return res.redirect("/");
+    return res.redirect("/dashboard");
 }
 
 let logout = async function (req, res, next) {
