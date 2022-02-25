@@ -1,0 +1,93 @@
+<% include ../partials/header %>
+    <% include ../partials/head %>
+
+
+        <!-- partial:partials/_sidebar.html -->
+        <% include ../partials/sidebar %>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-title">Add Roles</p>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="addRoleForm">
+                                                <form action="/roles/add" method="POST">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Role Name</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" name="name"
+                                                                placeholder="Role Name" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Status</label>
+                                                        <div class="col-sm-9">
+                                                            <select name="status" class="form-control">
+                                                                <option value="active">Active</option>
+                                                                <option value="inactive">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Permissions</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="row">
+                                                                <% for (const key in permissions) { %>
+                                                                    <div class="col-sm-12 permission-title">
+                                                                        <div class="form-group">
+                                                                            <label id="<%= key %>"
+                                                                                class="checkbox checkbox-grey checkbox-primary font-bold capitalize">
+                                                                                <input class="module" type="checkbox"
+                                                                                    value="<%= key %>"
+                                                                                    data-module="<%= key %>">
+                                                                                <span class="input-span"></span>
+                                                                                <%= (key).toUpperCase().replace(/-/g, ' '
+                                                                                    );%>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <% for (const key1 in permissions[key]) { %>
+                                                                        <div class="col-sm-4 <%= permissions[key][key1].module %>"
+                                                                            style="min-height: 32px;">
+                                                                            <div class="form-group"
+                                                                                style="margin-left: 24px;">
+                                                                                <label
+                                                                                    class="checkbox checkbox-grey checkbox-primary sub-module permission">
+                                                                                    <input type="checkbox"
+                                                                                        value="<%= permissions[key][key1].slug %>"
+                                                                                        name="permissions"
+                                                                                        class="permission"
+                                                                                        data-module="<%= permissions[key][key1].module %>">
+                                                                                    <span class="input-span"></span>
+                                                                                    <%= permissions[key][key1].name %>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary mr-2">Add Role</button>
+                                                    <a class="btn btn-light" href="/roles">Cancel</a>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <% include ../partials/footer %>

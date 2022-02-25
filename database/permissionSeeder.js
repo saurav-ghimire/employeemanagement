@@ -2,6 +2,7 @@ const permissionModel = require('../models/permission');
 const permissions = require('../config/cmsConfig').modulePermissions;
 
 let permissionSeeder = async () => {
+
     for (let key in permissions) {
         if (Object.prototype.hasOwnProperty.call(permissions, key)) {
             let permissionmodules = permissions[key];

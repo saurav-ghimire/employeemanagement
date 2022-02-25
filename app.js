@@ -11,7 +11,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const mongoStore = require('connect-mongo');
 const passport = require('passport');
-let rolesRouter = require('./routes/roles');
+
 
 const { getPermissions } = require('./helper/permissionHelper');
 let userModel = require("./models/user");
@@ -27,7 +27,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var employeesRouter = require('./routes/employees');
 var designationRouter = require('./routes/designation');
+let rolesRouter = require('./routes/roles');
 var apiRouter = require('./routes/api/api');
+let { isLoggedIn } = require("./middleware/authenticateMiddleware");
 
 var app = express();
 app.use(session({
@@ -103,6 +105,7 @@ app.use('/', indexRouter);
 app.use('/employees', employeesRouter);
 app.use('/designation', designationRouter);
 app.use('/users', usersRouter);
+app.use('/roles', [isLoggedIn], rolesRouter);
 app.use('/api', cors(), apiRouter);
 
 // catch 404 and forward to error handler

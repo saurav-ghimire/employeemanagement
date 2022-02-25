@@ -1,5 +1,5 @@
 let roleModel = require("../models/role");
-// let permissionModel = require("../models/permission");
+let permissionModel = require("../models/permission");
 
 let roleService = {
     create: async (data) => {
