@@ -1,6 +1,5 @@
 const permissionModel = require('../models/permission');
 const permissions = require('../config/cmsConfig').modulePermissions;
-
 let permissionSeeder = async () => {
 
     for (let key in permissions) {
@@ -23,6 +22,7 @@ let permissionSeeder = async () => {
             }
         }
     }
+
 };
 
 module.exports = { permissionSeeder };

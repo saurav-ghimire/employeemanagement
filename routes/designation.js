@@ -4,21 +4,22 @@ let companyController = require("../controllers/companyDesignation");
 let { createDesignationValidation } = require("../validators/designationValidators");
 let { isLoggedIn } = require("../middleware/authenticateMiddleware");
 const designation = require('../models/designation');
+let { checkPermission } = require("../middleware/permissionMiddleware");
 
 /* GET designation listing page. */
-router.get('/', companyController.designationPage);
+router.get('/', [checkPermission('designation.create')], companyController.designationPage);
 
 // get designation add page
-router.get('/add', [isLoggedIn], companyController.addPage);
+router.get('/add', [checkPermission('designation.create'), isLoggedIn], companyController.addPage);
 
-router.post('/add', [isLoggedIn, createDesignationValidation], companyController.addDesignation);
+router.post('/add', [checkPermission('designation.create'), isLoggedIn, createDesignationValidation], companyController.addDesignation);
 
 // designation delete
-router.delete('/:id', companyController.designationDelete);
+router.delete('/:id', [checkPermission('designation.delete')], companyController.designationDelete);
 
 // show designation edit page
-router.get('/edit/:id', [isLoggedIn], companyController.designationEdit);
+router.get('/edit/:id', [checkPermission('designation.edit'), isLoggedIn], companyController.designationEdit);
 // update designation
-router.put('/edit/:id', [isLoggedIn, createDesignationValidation], companyController.designationUpdate);
+router.put('/edit/:id', [checkPermission('designation.edit'), isLoggedIn, createDesignationValidation], companyController.designationUpdate);
 
 module.exports = router;

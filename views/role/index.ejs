@@ -12,12 +12,64 @@
                         <div class="col-md-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <p class="card-title">Roles management</p>
-                                    <div class="row">
-                                        <div class="col-12">
-
+                                    <% include ../partials/message %>
+                                        <div class="card-title"
+                                            style="display: flex; justify-content: space-between; align-items: center;">
+                                            <p class="card-title">Roles management</p>
+                                            <div class="card-button">
+                                                <a href="/roles/add">
+                                                    <button class="btn btn-primary btn-sm font-weight-medium">Add
+                                                        Roles</button>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        Role Name
+                                                    </th>
+                                                    <th>
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(let i=0; data.length> i; i++){
+                                                    let store = data[i];
+                                                    %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= i+1; %>
+                                                        </td>
+                                                        <td>
+                                                            <%= store.name %>
+                                                        </td>
+                                                        <td
+                                                            style="display: flex; justify-content: flex-start; align-items: center;">
+                                                            <a href="/roles/edit/<%= store._id; %>"
+                                                                style="text-decoration: none;">
+                                                                <button
+                                                                    class="btn btn-primary btn-sm font-weight-medium">
+                                                                    Edit</button>
+                                                            </a>
+                                                            &nbsp;
+                                                            <form action="/roles/<%= store._id; %>?_method=delete"
+                                                                method="post">
+                                                                <button
+                                                                    class="btn btn-danger btn-sm font-weight-medium">
+                                                                    Delete</button>
+                                                            </form>
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
                                 </div>
                             </div>
                         </div>

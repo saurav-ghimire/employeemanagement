@@ -7,6 +7,7 @@ let { createUserValidation } = require("../validators/userValidator");
 let { createDepartmentValidation } = require("../validators/departmentValidators");
 let { isLoggedIn } = require("../middleware/authenticateMiddleware");
 const department = require('../models/department');
+let { checkPermission } = require("../middleware/permissionMiddleware");
 
 /* GET home page. */
 router.get('/', [isLoggedIn], userController.dashboard);
@@ -37,6 +38,11 @@ router.post('/auth/login', async (req, res, next) => {
   })(req, res, next);
 });
 
+// 403
+router.get('/403', async function (req, res, next) {
+  res.render("403")
+})
+
 // logout
 router.get('/logout', userController.logout);
 
@@ -66,20 +72,20 @@ router.put('/reset/:token', [createUserValidation], userController.changePasswor
 // -------------------------
 
 // department page
-router.get('/departments', [isLoggedIn], companyController.departmentPage);
+router.get('/departments', [checkPermission('departments.view'), isLoggedIn], companyController.departmentPage);
 
 // department save
-router.post('/departments', [isLoggedIn, createDepartmentValidation], companyController.departmentSave);
+router.post('/departments', [checkPermission('departments.create'), isLoggedIn, createDepartmentValidation], companyController.departmentSave);
 
 // department list page
-router.get('/departments-list', [isLoggedIn], companyController.departmentList);
+router.get('/departments-list', [checkPermission('departments.view'), isLoggedIn], companyController.departmentList);
 
 // department edit page
-router.get('/departments-edit/:id', [isLoggedIn], companyController.departmentEdit);
+router.get('/departments-edit/:id', [checkPermission('departments.edit'), isLoggedIn], companyController.departmentEdit);
 
 // department update
-router.put('/departments-edit/:id', [isLoggedIn, createDepartmentValidation], companyController.departmentUpdate);
+router.put('/departments-edit/:id', [checkPermission('departments.edit'), isLoggedIn, createDepartmentValidation], companyController.departmentUpdate);
 
 // department delete
-router.delete('/departments-delete/:id', companyController.departmentDelete);
+router.delete('/departments-delete/:id', [checkPermission('departments.delete')], companyController.departmentDelete);
 module.exports = router;

@@ -26,12 +26,12 @@ module.exports = {
                 }
             } else {
                 for (let moduleID in modules) {
-                    if (moduleID === 'dashboard') {
+                    if (moduleID === '/') {
                         const arrayData = {
                             id: moduleID,
                             title: modules[moduleID],
-                            subpagesCount: Object.keys(modulePages[moduleID]).length,
-                            enableDropdown: Object.keys(modulePages[moduleID]).length > 1 ? true : false,
+                            // subpagesCount: Object.keys(modulePages[moduleID]).length,
+                            // enableDropdown: Object.keys(modulePages[moduleID]).length > 1 ? true : false,
                             subPages: modulePages[moduleID],
                             icon: moduleIcons[moduleID]
                         };

@@ -99,12 +99,12 @@ app.use(async (req, res, next) => {
 });
 
 require("./database/roleAndUserSeeder");
-require("./database/permissionSeeder");
+require("./database/permissionSeeder").permissionSeeder();
 
 app.use('/', indexRouter);
-app.use('/employees', employeesRouter);
-app.use('/designation', designationRouter);
-app.use('/users', usersRouter);
+app.use('/employees', [isLoggedIn], employeesRouter);
+app.use('/designation', [isLoggedIn], designationRouter);
+app.use('/users', [isLoggedIn], usersRouter);
 app.use('/roles', [isLoggedIn], rolesRouter);
 app.use('/api', cors(), apiRouter);
 

@@ -1,18 +1,19 @@
 let router = require('express').Router();
-
 let roleController = require("../controllers/roleController");
 let { checkPermission } = require("../middleware/permissionMiddleware");
+let { roleValidation } = require("../validators/roleValidators");
+let { isLoggedIn } = require("../middleware/authenticateMiddleware");
 
-router.get('/', roleController.index);
+router.get('/', [checkPermission('roles.view'), isLoggedIn], roleController.index);
 
-router.get('/add', roleController.add);
+router.get('/add', [checkPermission('roles.create'), isLoggedIn], roleController.add);
 
-router.post('/add', [checkPermission('roles.create')], roleController.addRole);
+router.post('/add', [checkPermission('roles.create'), isLoggedIn], roleController.addRole);
 
-router.get('/:id/edit', [checkPermission('roles.edit')], roleController.edit);
+router.get('/edit/:id', [checkPermission('roles.edit'), isLoggedIn], roleController.edit);
 
-router.post('/:id/edit', [checkPermission('roles.edit')], roleController.editRole);
+router.put('/edit/:id', [checkPermission('roles.edit'), isLoggedIn], roleController.update);
 
-router.delete('/:id/delete', [checkPermission('roles.delete')], roleController.deleteRole);
+router.delete('/:id', [checkPermission('roles.delete'), isLoggedIn], roleController.deleteRole);
 
 module.exports = router;
